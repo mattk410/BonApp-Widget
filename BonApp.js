@@ -79,9 +79,6 @@
     var friendly= parseMenu(theMenu);
     outputString= createOutputString(friendly);
 
-
-
-
     title = "Stav Hall Menu";
 
     //Output
