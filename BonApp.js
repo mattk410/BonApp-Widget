@@ -147,12 +147,14 @@
      theDate,
      theMenu,
      title,
+     lastUpdated,
      jstringObj,
      outputString;
 
     dom          = $(domEl);
     jstringObj   = JSON.parse(output);
     title        = parseCafe(jstringObj);
+    lastUpdated  = lastUpdated();
     theDate      = parseDate(jstringObj.days[0].date);
     theMenu      = jstringObj.items;
     var friendly = parseMenu(theMenu);
