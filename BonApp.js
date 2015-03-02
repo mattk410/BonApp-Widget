@@ -99,6 +99,11 @@
         return okItems;
     }
 
+    function capitalizeStr(theStr, upperCaseLetter, removeLetter) {
+        var newCapitalStr = theStr[upperCaseLetter].toUpperCase() + theStr.slice(removeLetter)
+        return newCapitalStr;
+    }
+
     function cleanUpStationLabel(theStation) {
         // replace the @ symbol
         var cleanString = theStation.replace("@", "");
