@@ -105,6 +105,28 @@
         return okItems;
     }
 
+    function lastUpdated() {
+        var time    = new Date();
+        var hours   = time.getHours();
+        var minutes = time.getMinutes();
+        var timeOfDay = "";
+
+        // convert from military time
+        if (hours > 12) {
+            timeOfDay = "pm";
+            hours -= 12;
+        } else if (hours === 0) {
+            timeOfDay = "am";
+            hours = 12;
+        } else {
+            timeOfDay = "am";
+        }
+
+        var lastUpdated = "Updated at " + hours + ":" + minutes + timeOfDay;
+
+        return lastUpdated;
+    }
+
     function capitalizeStr(theStr, upperCaseLetter, removeLetter) {
         var newCapitalStr = theStr[upperCaseLetter].toUpperCase() + theStr.slice(removeLetter)
         return newCapitalStr;
