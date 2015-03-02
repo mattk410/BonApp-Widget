@@ -5,7 +5,12 @@
 
 
   render: function(output) {
-    return "<div id=\"widgetTitle\"></div>\n<div id=\"date\" class=\"e\">\n</div>\n<div id=\"food\" class=\"e\">\n</div>\n</div>\n<div id=\"footer\"></div>";
+    return [
+        '<div id="widgetTitle"></div>',
+        '<div id="date" class="e"></div>',
+        '<div id="food" class="e"></div>',
+        '<div id="footer"></div>',
+    ].join('')
   },
 
   update: function(output, domEl) {
