@@ -59,8 +59,8 @@
             var item = "";
             // looping through the properties on an element
             if(menu.hasOwnProperty(prop)){
-                if(menu[prop].cor_icon.hasOwnProperty(7)){
-                    okItems.push(menu[prop].label);
+                // Icon (filtering dietary restrictions)
+                if(menu[prop].cor_icon.hasOwnProperty(preferredDiet)){
                 }
             }
         }
