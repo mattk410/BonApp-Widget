@@ -28,9 +28,13 @@
         y=x.substr(0,4);
         m=x.substr(5,2);
         d=x.substr(8,2);
-        console.log(y+" "+m+" "+d);
-        var today= new Date(y+"-"+m+"-"+d);
-        return today.toDateString();
+
+        var rawToday = new Date(y+"-"+m+"-"+d);
+        var offsetDate = Date(rawToday - rawToday.getTimezoneOffset());
+        var todayDate = new Date(offsetDate).toString();
+        var today = todayDate.substr(0,10);
+
+        return today.toString();
     }
 
     function parseMenu(menu){
