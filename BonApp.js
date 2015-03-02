@@ -38,7 +38,9 @@
     }
 
     function parseMenu(menu){
-        console.log("menu: "+ menu);
+        console.log ("menu: ")
+        console.log(arguments);
+
         var okItems=[];
         for(var prop in menu){
             if(menu.hasOwnProperty(prop)){
