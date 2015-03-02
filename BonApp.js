@@ -60,9 +60,9 @@
 
         var okItems = [];
         var prevStation = "";
+        var item = "";
 
         for(var prop in menu){
-            var item = "";
             // looping through the properties on an element
             if(menu.hasOwnProperty(prop)){
                 // Icon (filtering dietary restrictions)
