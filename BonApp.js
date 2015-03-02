@@ -99,6 +99,17 @@
         return okItems;
     }
 
+    function cleanUpStationLabel(theStation) {
+        // replace the @ symbol
+        var cleanString = theStation.replace("@", "");
+        // capitalize first letter
+        var capitalizedStr = capitalizeStr(cleanString, 8, 9);
+        // add back in the bold formatting
+        capitalizedStr = "<strong>" + capitalizedStr + "</strong>";
+
+        return capitalizedStr;
+    }
+
     var dom,
      theDate,
      theMenu,
