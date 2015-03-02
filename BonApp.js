@@ -6,7 +6,7 @@
 
   render: function(output) {
     return [
-        '<div id="widgetTitle"></div>',
+        '<div id="widgetTitle" class="e"></div>',
         '<div id="date" class="e"></div>',
         '<div id="food" class="e"></div>',
         '<div id="footer"></div>',
@@ -18,7 +18,7 @@
     function createOutputString(okItems){
         var str = "";
         for(var i = 0; i < okItems.length; i++){
-            str+= okItems[i]+"<br><br>";
+            str += okItems[i] + "<br>";
         }
         return str;
     }
@@ -37,15 +37,55 @@
         return today.toString();
     }
 
+    function parseCafe(json) {
+        var id = ([Object.keys(json["days"][0]["cafes"])[0]]);
+        var theTitle = json["days"][0]["cafes"][id]["name"];
+        return theTitle;
+    }
+
     function parseMenu(menu){
+        // enum object to map diets to numbers
+        var diets = {
+            "FTF"   : 6, // farm to fork
+            "GF"    : 9, // gluten free
+            "VEG"   : 1, // vegetarian
+            "VEGAN" : 4, // vegan
+        };
+
+        // your selected diets
+        var preferredDiet = diets.GF;
+
         console.log ("menu: ")
         console.log(arguments);
 
-        var okItems=[];
+        var okItems = [];
+        var prevStation = "";
+        var item = "";
+
         for(var prop in menu){
+            // looping through the properties on an element
             if(menu.hasOwnProperty(prop)){
-                if(menu[prop].cor_icon.hasOwnProperty(7)){
-                    okItems.push(menu[prop].label);
+                // Icon (filtering dietary restrictions)
+                if(menu[prop].cor_icon.hasOwnProperty(preferredDiet)){
+                    // Station
+                    if(menu[prop].station != prevStation){
+                        // clean station string
+                        item = "<br />" + cleanUpStationLabel(menu[prop].station + "<br />");
+                        // push food label next to the station
+                        item += "⚬ " + capitalizeStr(menu[prop].label, 0, 1);
+                        // the previous station
+                        prevStation = menu[prop].station;
+                    }
+                    // same station with more items
+                    else {
+                        // the served food item
+                        item = "⚬ " + capitalizeStr(menu[prop].label, 0, 1);
+                        // the previous station
+                        prevStation = menu[prop].station;
+                    }
+
+                    // add it
+                    okItems.push(item);
                 }
             }
         }
@@ -65,6 +105,22 @@
         return okItems;
     }
 
+    function capitalizeStr(theStr, upperCaseLetter, removeLetter) {
+        var newCapitalStr = theStr[upperCaseLetter].toUpperCase() + theStr.slice(removeLetter)
+        return newCapitalStr;
+    }
+
+    function cleanUpStationLabel(theStation) {
+        // replace the @ symbol
+        var cleanString = theStation.replace("@", "");
+        // capitalize first letter
+        var capitalizedStr = capitalizeStr(cleanString, 8, 9);
+        // add back in the bold formatting
+        capitalizedStr = "<strong>" + capitalizedStr + "</strong>";
+
+        return capitalizedStr;
+    }
+
     var dom,
      theDate,
      theMenu,
@@ -72,14 +128,13 @@
      jstringObj,
      outputString;
 
-    dom = $(domEl);
-    jstringObj = JSON.parse(output);
-    theDate= parseDate(jstringObj.days[0].date);
-    theMenu= jstringObj.items;
-    var friendly= parseMenu(theMenu);
-    outputString= createOutputString(friendly);
-
-    title = "Stav Hall Menu";
+    dom          = $(domEl);
+    jstringObj   = JSON.parse(output);
+    title        = parseCafe(jstringObj);
+    theDate      = parseDate(jstringObj.days[0].date);
+    theMenu      = jstringObj.items;
+    var friendly = parseMenu(theMenu);
+    outputString = createOutputString(friendly);
 
     //Output
     dom.find(widgetTitle).html(title);
@@ -99,19 +154,23 @@
     "overflow:hidden",
 
     "#date",
-    "  margin:12pt",
+    "  text-align:center",
     "  margin-bottom:12pt",
+    "  margin-top: -40px",
+    "  font-family: Helvetica",
+    "  font-size: 15pt",
+    "  font-weight:bold",
+    "  color: rgba(0,0,0,0.75)",
+
+    "#widgetTitle",
+    "  text-align:center",
+    "  margin-top:12pt",
+    "  margin-bottom:0pt",
     "  font-family: Helvetica",
     "  font-size: 25pt",
     "  font-weight:bold",
     "  color: rgba(128,0,0,0.75)",
-
-    "#title",
-    "  margin-left:50pt",
-    "  margin-right:12pt",
-    "  font-family: American Typewriter",
-    "  font-size: 20pt",
-    "  font-weight:bold",
+    "  border-bottom: solid 1px black",
 
     "#description",
     "  margin-left:12pt",
@@ -124,7 +183,9 @@
     "  hyphens: auto",
 
     "#food",
-    "  height: 350px",
+    "  margin-top: -60px",
+    "  height: auto",
+    "  margin-left: 20px",
 
     "#footer",
     "  font-family: Helvetica",
@@ -136,8 +197,6 @@
     "  margin: 0 0 0 20px",
 
     ".e",
-    "  margin-top: -40px",
-    "  margin-left: 20px",
     "  height: 60pt",
 
     ".event",
