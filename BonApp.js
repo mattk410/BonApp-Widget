@@ -86,4 +86,61 @@
     dom.find(date).html(theDate);
     dom.find(food).html(outputString);
   },
-  style: "top: 20px\nleft: 440px\nwidth:400px\nmargin:0px\npadding:0px\nbackground:rgba(#FFF, 0.5)\nborder:2px solid rgba(#000, 0.5)\nborder-radius:10px\noverflow:hidden\n#date\n  margin:12pt\n  margin-bottom:12pt\n  font-family: Helvetica\n  font-size: 25pt\n  font-weight:bold\n  color: rgba(black, 0.75)\n\n#title\n  margin-left:50pt\n  margin-right:12pt\n  font-family: American Typewriter\n  font-size: 20pt\n  font-weight:bold\n#description\n  margin-left:12pt\n  margin-right:12pt\n  font-family: American Typewriter\n  font-size: 12pt\n  line-height:18pt\n  max-height:10pt\n  overflow:hidden\n  hyphens: auto\n\n\#food\n  height: 350px\n\n#footer\n  font-family: Helvetica\n  font-size: 9pt\n  margin:12pt\n  color: rgba(#000, 0.5)\n\np\n  margin: 0 0 0 20px\n\n.e\n  height: 60pt\n\n.event\n  font-size: 17pt\n  font-weight: bold\n"
+
+  style: [
+    "top: 20px",
+    "left: 40px",
+    "width:400px",
+    "margin:0px",
+    "padding:0px",
+    "background:rgba(#FFF, 0.5)",
+    "border:2px solid rgba(#000, 0.5)",
+    "border-radius:10px",
+    "overflow:hidden",
+
+    "#date",
+    "  margin:12pt",
+    "  margin-bottom:12pt",
+    "  font-family: Helvetica",
+    "  font-size: 25pt",
+    "  font-weight:bold",
+    "  color: rgba(128,0,0,0.75)",
+
+    "#title",
+    "  margin-left:50pt",
+    "  margin-right:12pt",
+    "  font-family: American Typewriter",
+    "  font-size: 20pt",
+    "  font-weight:bold",
+
+    "#description",
+    "  margin-left:12pt",
+    "  margin-right:12pt",
+    "  font-family: American Typewriter",
+    "  font-size: 12pt",
+    "  line-height:18pt",
+    "  max-height:10pt",
+    "  overflow:hidden",
+    "  hyphens: auto",
+
+    "#food",
+    "  height: 350px",
+
+    "#footer",
+    "  font-family: Helvetica",
+    "  font-size: 9pt",
+    "  margin:12pt",
+    "  color: rgba(#000, 0.5)",
+
+    "p",
+    "  margin: 0 0 0 20px",
+
+    ".e",
+    "  margin-top: -40px",
+    "  margin-left: 20px",
+    "  height: 60pt",
+
+    ".event",
+    "  font-size: 17pt",
+    "  font-weight: bold",
+    ].join('\n')
