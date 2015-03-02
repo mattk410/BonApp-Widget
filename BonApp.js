@@ -174,6 +174,11 @@
     "border-radius:10px",
     "overflow:hidden",
 
+    "#updated",
+    "  font-family: Helvetica",
+    "  font-size: 12pt",
+    "  color: rgba(0,0,0,0.75)",
+
     "#date",
     "  text-align:center",
     "  margin-bottom:12pt",
@@ -209,9 +214,11 @@
     "  margin-left: 20px",
 
     "#footer",
+    "  text-align: center",
     "  font-family: Helvetica",
     "  font-size: 9pt",
-    "  margin:12pt",
+    "  margin-top: 12pt",
+    "  margin-bottom: 12pt",
     "  color: rgba(#000, 0.5)",
 
     "p",
