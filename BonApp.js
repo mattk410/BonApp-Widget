@@ -6,7 +6,7 @@
 
   render: function(output) {
     return [
-        '<div id="widgetTitle"></div>',
+        '<div id="widgetTitle" class="e"></div>',
         '<div id="date" class="e"></div>',
         '<div id="food" class="e"></div>',
         '<div id="footer"></div>',
@@ -18,7 +18,7 @@
     function createOutputString(okItems){
         var str = "";
         for(var i = 0; i < okItems.length; i++){
-            str+= okItems[i]+"<br><br>";
+            str += okItems[i] + "<br>";
         }
         return str;
     }
@@ -70,7 +70,7 @@
                     // Station
                     if(menu[prop].station != prevStation){
                         // clean station string
-                        item = cleanUpStationLabel(menu[prop].station + "<br />");
+                        item = "<br />" + cleanUpStationLabel(menu[prop].station + "<br />");
                         // push food label next to the station
                         item += "⚬ " + capitalizeStr(menu[prop].label, 0, 1);
                         // the previous station
@@ -128,14 +128,13 @@
      jstringObj,
      outputString;
 
-    dom = $(domEl);
-    jstringObj = JSON.parse(output);
-    theDate= parseDate(jstringObj.days[0].date);
-    theMenu= jstringObj.items;
-    var friendly= parseMenu(theMenu);
-    outputString= createOutputString(friendly);
-
-    title = "Stav Hall Menu";
+    dom          = $(domEl);
+    jstringObj   = JSON.parse(output);
+    title        = parseCafe(jstringObj);
+    theDate      = parseDate(jstringObj.days[0].date);
+    theMenu      = jstringObj.items;
+    var friendly = parseMenu(theMenu);
+    outputString = createOutputString(friendly);
 
     //Output
     dom.find(widgetTitle).html(title);
@@ -155,19 +154,23 @@
     "overflow:hidden",
 
     "#date",
-    "  margin:12pt",
+    "  text-align:center",
     "  margin-bottom:12pt",
+    "  margin-top: -40px",
+    "  font-family: Helvetica",
+    "  font-size: 15pt",
+    "  font-weight:bold",
+    "  color: rgba(0,0,0,0.75)",
+
+    "#widgetTitle",
+    "  text-align:center",
+    "  margin-top:12pt",
+    "  margin-bottom:0pt",
     "  font-family: Helvetica",
     "  font-size: 25pt",
     "  font-weight:bold",
     "  color: rgba(128,0,0,0.75)",
-
-    "#title",
-    "  margin-left:50pt",
-    "  margin-right:12pt",
-    "  font-family: American Typewriter",
-    "  font-size: 20pt",
-    "  font-weight:bold",
+    "  border-bottom: solid 1px black",
 
     "#description",
     "  margin-left:12pt",
@@ -180,7 +183,9 @@
     "  hyphens: auto",
 
     "#food",
+    "  margin-top: -60px",
     "  height: auto",
+    "  margin-left: 20px",
 
     "#footer",
     "  font-family: Helvetica",
@@ -192,8 +197,6 @@
     "  margin: 0 0 0 20px",
 
     ".e",
-    "  margin-top: -40px",
-    "  margin-left: 20px",
     "  height: 60pt",
 
     ".event",
