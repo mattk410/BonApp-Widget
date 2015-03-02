@@ -56,6 +56,8 @@
         var prevStation = "";
 
         for(var prop in menu){
+            var item = "";
+            // looping through the properties on an element
             if(menu.hasOwnProperty(prop)){
                 if(menu[prop].cor_icon.hasOwnProperty(7)){
                     okItems.push(menu[prop].label);
