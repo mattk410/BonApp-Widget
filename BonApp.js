@@ -169,7 +169,7 @@
     "  hyphens: auto",
 
     "#food",
-    "  height: 350px",
+    "  height: auto",
 
     "#footer",
     "  font-family: Helvetica",
