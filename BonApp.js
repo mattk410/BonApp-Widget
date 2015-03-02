@@ -52,7 +52,9 @@
         console.log ("menu: ")
         console.log(arguments);
 
-        var okItems=[];
+        var okItems = [];
+        var prevStation = "";
+
         for(var prop in menu){
             if(menu.hasOwnProperty(prop)){
                 if(menu[prop].cor_icon.hasOwnProperty(7)){
