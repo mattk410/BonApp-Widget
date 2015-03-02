@@ -16,9 +16,8 @@
   update: function(output, domEl) {
 
     function createOutputString(okItems){
-        //console.log("okItems");
-        var str="";
-        for(var i=0; i<okItems.length; i++){
+        var str = "";
+        for(var i = 0; i < okItems.length; i++){
             str+= okItems[i]+"<br><br>";
         }
         //console.log("str: " + str);
