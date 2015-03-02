@@ -20,12 +20,10 @@
         for(var i = 0; i < okItems.length; i++){
             str+= okItems[i]+"<br><br>";
         }
-        //console.log("str: " + str);
         return str;
     }
 
     function parseDate(x){
-        console.log("x: "+x);
         var m,d,y;
         y=x.substr(0,4);
         m=x.substr(5,2);
