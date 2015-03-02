@@ -37,6 +37,12 @@
         return today.toString();
     }
 
+    function parseCafe(json) {
+        var id = ([Object.keys(json["days"][0]["cafes"])[0]]);
+        var theTitle = json["days"][0]["cafes"][id]["name"];
+        return theTitle;
+    }
+
     function parseMenu(menu){
         // enum object to map diets to numbers
         var diets = {
