@@ -61,6 +61,25 @@
             if(menu.hasOwnProperty(prop)){
                 // Icon (filtering dietary restrictions)
                 if(menu[prop].cor_icon.hasOwnProperty(preferredDiet)){
+                    // Station
+                    if(menu[prop].station != prevStation){
+                        // clean station string
+                        item = cleanUpStationLabel(menu[prop].station + "<br />");
+                        // push food label next to the station
+                        item += "⚬ " + capitalizeStr(menu[prop].label, 0, 1);
+                        // the previous station
+                        prevStation = menu[prop].station;
+                    }
+                    // same station with more items
+                    else {
+                        // the served food item
+                        item = "⚬ " + capitalizeStr(menu[prop].label, 0, 1);
+                        // the previous station
+                        prevStation = menu[prop].station;
+                    }
+
+                    // add it
+                    okItems.push(item);
                 }
             }
         }
