@@ -75,12 +75,8 @@
     dom = $(domEl);
     jstringObj = JSON.parse(output);
     theDate= parseDate(jstringObj.days[0].date);
-    console.log("date: " + theDate);
     theMenu= jstringObj.items;
-    console.log("theMenu: "+theMenu);
     var friendly= parseMenu(theMenu);
-    console.log("friendly: "+ friendly);
-    //outputString="hello";
     outputString= createOutputString(friendly);
 
 
