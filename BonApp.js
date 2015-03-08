@@ -106,17 +106,6 @@
                         // add it
                         okItems.push(item);
                     }
-                    // same station with more items
-                    else {
-                        // the served food item
-                        item = "⚬ " + capitalizeStr(menu[prop].label, 0, 1);
-                        // the previous station
-                        prevStation = menu[prop].station;
-                    }
-
-                    // add it
-                    okItems.push(item);
-                }
             }
         }
         // Handle update on Mondays and 0 results
