@@ -74,15 +74,6 @@
         return theTitle;
     }
 
-    function parseMenu(menu){
-        // enum object to map diets to numbers
-        var diets = {
-            "FTF"   : 6, // farm to fork
-            "GF"    : 9, // gluten free
-            "VEG"   : 1, // vegetarian
-            "VEGAN" : 4, // vegan
-        };
-
         // your selected diets
         var preferredDiet = diets.GF;
 
