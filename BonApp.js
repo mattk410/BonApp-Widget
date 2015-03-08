@@ -224,7 +224,7 @@
     lastUpdated  = lastUpdated();
     theDate      = parseDate(jstringObj.days[0].date);
     theMenu      = jstringObj.items;
-    var friendly = parseMenu(theMenu);
+    var friendly = parseMenu(theMenu, savedDiet);
     outputString = createOutputString(friendly);
 
     //Output
