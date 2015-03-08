@@ -141,10 +141,13 @@
             timeOfDay = "am";
         }
 
-        var lastUpdated = "Updated at " + hours + ":" + minutes + timeOfDay;
         var lastUpdated = "Updated at " + pad(hours) + ":" + pad(minutes) + timeOfDay;
 
         return lastUpdated;
+    }
+
+    function pad(number) {
+        return (number < 10 ? '0' : '') + number;
     }
 
     function capitalizeStr(theStr, upperCaseLetter, removeLetter) {
