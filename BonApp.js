@@ -194,6 +194,22 @@
         }
     }
 
+    function initFromLocalStorage() {
+        // check to see if LocalStorage has been set
+        if (localStorage.getItem("BonAppSettings") != null) {
+            var savedDiet = localStorage.getItem("BonAppSettings");
+            var theValue = JSON.parse(savedDiet).diet;
+            document.querySelector(".myDiet").value = theValue;
+        }
+        else {
+            return -1;
+        }
+
+        return theValue;
+    }
+
+    var savedDiet = initFromLocalStorage();
+
     var dom,
      theDate,
      theMenu,
