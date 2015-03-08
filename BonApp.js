@@ -74,11 +74,9 @@
         return theTitle;
     }
 
+    function parseMenu(menu, diet){
         // your selected diets
-        var preferredDiet = diets.GF;
-
-        console.log ("menu: ")
-        console.log(arguments);
+        var preferredDiet = parseInt(diet);
 
         var okItems = [];
         var prevStation = "";
