@@ -142,6 +142,7 @@
         }
 
         var lastUpdated = "Updated at " + hours + ":" + minutes + timeOfDay;
+        var lastUpdated = "Updated at " + pad(hours) + ":" + pad(minutes) + timeOfDay;
 
         return lastUpdated;
     }
