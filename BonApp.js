@@ -6,6 +6,17 @@
 
   render: function(output) {
     return [
+        '<select class="myDiet">',
+        '  <option value="-1">All</option>',
+        '  <option value="6">Farm to Fork</option>',
+        '  <option value="18">Humane</option>',
+        '  <option value="7">In-Balance</option>',
+        '  <option value="9">Made Without Gluten</option>',
+        '  <option value="57">Contains Nuts</option>',
+        '  <option value="3">Seafood Watch</option>',
+        '  <option value="1">Vegetarian</option>',
+        '  <option value="4">Vegan</option>',
+        '</select>',
         '<div id="widgetTitle" class="e"></div>',
         '<div id="date" class="e"></div>',
         '<div id="food" class="e"></div>',
@@ -14,6 +25,26 @@
   },
 
   update: function(output, domEl) {
+
+    var dietSelection = document.querySelector(".myDiet");
+    dietSelection.onchange = function() {
+        // save to LocalStorage every time we make a change
+        saveSettings(dietSelection.value);
+    };
+
+    function saveSettings(diet) {
+        var userSettings = {
+            diet: diet,
+        };
+
+        localStorage.setItem('BonAppSettings', JSON.stringify(userSettings));
+
+        var friendly = parseMenu(theMenu, diet);
+        outputString = createOutputString(friendly);
+        updateView();
+
+        return;
+    }
 
     function createOutputString(okItems){
         var str = "";
@@ -43,20 +74,9 @@
         return theTitle;
     }
 
-    function parseMenu(menu){
-        // enum object to map diets to numbers
-        var diets = {
-            "FTF"   : 6, // farm to fork
-            "GF"    : 9, // gluten free
-            "VEG"   : 1, // vegetarian
-            "VEGAN" : 4, // vegan
-        };
-
+    function parseMenu(menu, diet){
         // your selected diets
-        var preferredDiet = diets.GF;
-
-        console.log ("menu: ")
-        console.log(arguments);
+        var preferredDiet = parseInt(diet);
 
         var okItems = [];
         var prevStation = "";
@@ -65,28 +85,27 @@
         for(var prop in menu){
             // looping through the properties on an element
             if(menu.hasOwnProperty(prop)){
-                // Icon (filtering dietary restrictions)
-                if(menu[prop].cor_icon.hasOwnProperty(preferredDiet)){
-                    // Station
-                    if(menu[prop].station != prevStation){
-                        // clean station string
-                        item = "<br />" + cleanUpStationLabel(menu[prop].station + "<br />");
-                        // push food label next to the station
-                        item += "⚬ " + capitalizeStr(menu[prop].label, 0, 1);
-                        // the previous station
-                        prevStation = menu[prop].station;
+                    // Icon (filtering dietary restrictions)
+                    if(menu[prop].cor_icon.hasOwnProperty(preferredDiet) || preferredDiet == -1){
+                        // Station
+                        if(menu[prop].station != prevStation){
+                            // clean station string
+                            item = "<br />" + cleanUpStationLabel(menu[prop].station + "<br />");
+                            // push food label next to the station
+                            item += "⚬ " + capitalizeStr(menu[prop].label, 0, 1);
+                            // the previous station
+                            prevStation = menu[prop].station;
+                        }
+                        // same station with more items
+                        else {
+                            // the served food item
+                            item = "⚬ " + capitalizeStr(menu[prop].label, 0, 1);
+                            // the previous station
+                            prevStation = menu[prop].station;
+                        }
+                        // add it
+                        okItems.push(item);
                     }
-                    // same station with more items
-                    else {
-                        // the served food item
-                        item = "⚬ " + capitalizeStr(menu[prop].label, 0, 1);
-                        // the previous station
-                        prevStation = menu[prop].station;
-                    }
-
-                    // add it
-                    okItems.push(item);
-                }
             }
         }
         // Handle update on Mondays and 0 results
@@ -105,6 +124,32 @@
         return okItems;
     }
 
+    function lastUpdated() {
+        var time    = new Date();
+        var hours   = time.getHours();
+        var minutes = time.getMinutes();
+        var timeOfDay = "";
+
+        // convert from military time
+        if (hours > 12) {
+            timeOfDay = "pm";
+            hours -= 12;
+        } else if (hours === 0) {
+            timeOfDay = "am";
+            hours = 12;
+        } else {
+            timeOfDay = "am";
+        }
+
+        var lastUpdated = "Updated at " + pad(hours) + ":" + pad(minutes) + timeOfDay;
+
+        return lastUpdated;
+    }
+
+    function pad(number) {
+        return (number < 10 ? '0' : '') + number;
+    }
+
     function capitalizeStr(theStr, upperCaseLetter, removeLetter) {
         var newCapitalStr = theStr[upperCaseLetter].toUpperCase() + theStr.slice(removeLetter)
         return newCapitalStr;
@@ -121,25 +166,68 @@
         return capitalizedStr;
     }
 
+    function updateView() {
+        //Output
+        try {
+            dom.find(widgetTitle).html(title);
+        }
+        catch(err) {
+            console.log("Error: \"" + err.message + "\" on line " + err.line);
+        }
+        try {
+            dom.find(date).html(theDate);
+        }
+        catch(err) {
+            console.log("Error: \"" + err.message + "\" on line " + err.line);
+        }
+        try {
+            dom.find(footer).html(lastUpdated);
+        }
+        catch(err) {
+            console.log("Error: \"" + err.message + "\" on line " + err.line);
+        }
+        try {
+            dom.find(food).html(outputString);
+        }
+        catch(err) {
+            console.log("Error: \"" + err.message + "\" on line " + err.line);
+        }
+    }
+
+    function initFromLocalStorage() {
+        // check to see if LocalStorage has been set
+        if (localStorage.getItem("BonAppSettings") != null) {
+            var savedDiet = localStorage.getItem("BonAppSettings");
+            var theValue = JSON.parse(savedDiet).diet;
+            document.querySelector(".myDiet").value = theValue;
+        }
+        else {
+            return -1;
+        }
+
+        return theValue;
+    }
+
+    var savedDiet = initFromLocalStorage();
+
     var dom,
      theDate,
      theMenu,
      title,
+     lastUpdated,
      jstringObj,
      outputString;
 
     dom          = $(domEl);
     jstringObj   = JSON.parse(output);
     title        = parseCafe(jstringObj);
+    lastUpdated  = lastUpdated();
     theDate      = parseDate(jstringObj.days[0].date);
     theMenu      = jstringObj.items;
-    var friendly = parseMenu(theMenu);
+    var friendly = parseMenu(theMenu, savedDiet);
     outputString = createOutputString(friendly);
 
-    //Output
-    dom.find(widgetTitle).html(title);
-    dom.find(date).html(theDate);
-    dom.find(food).html(outputString);
+    updateView();
   },
 
   style: [
@@ -152,6 +240,11 @@
     "border:2px solid rgba(#000, 0.5)",
     "border-radius:10px",
     "overflow:hidden",
+
+    "#updated",
+    "  font-family: Helvetica",
+    "  font-size: 12pt",
+    "  color: rgba(0,0,0,0.75)",
 
     "#date",
     "  text-align:center",
@@ -188,9 +281,11 @@
     "  margin-left: 20px",
 
     "#footer",
+    "  text-align: center",
     "  font-family: Helvetica",
     "  font-size: 9pt",
-    "  margin:12pt",
+    "  margin-top: 12pt",
+    "  margin-bottom: 12pt",
     "  color: rgba(#000, 0.5)",
 
     "p",
