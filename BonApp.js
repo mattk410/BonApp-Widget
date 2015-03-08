@@ -32,6 +32,20 @@
         saveSettings(dietSelection.value);
     };
 
+    function saveSettings(diet) {
+        var userSettings = {
+            diet: diet,
+        };
+
+        localStorage.setItem('BonAppSettings', JSON.stringify(userSettings));
+
+        var friendly = parseMenu(theMenu, diet);
+        outputString = createOutputString(friendly);
+        updateView();
+
+        return;
+    }
+
     function createOutputString(okItems){
         var str = "";
         for(var i = 0; i < okItems.length; i++){
