@@ -26,6 +26,12 @@
 
   update: function(output, domEl) {
 
+    var dietSelection = document.querySelector(".myDiet");
+    dietSelection.onchange = function() {
+        // save to LocalStorage every time we make a change
+        saveSettings(dietSelection.value);
+    };
+
     function createOutputString(okItems){
         var str = "";
         for(var i = 0; i < okItems.length; i++){
