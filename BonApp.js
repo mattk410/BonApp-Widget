@@ -227,31 +227,7 @@
     var friendly = parseMenu(theMenu, savedDiet);
     outputString = createOutputString(friendly);
 
-    //Output
-    try {
-        dom.find(widgetTitle).html(title);
-    }
-    catch(err) {
-        console.log("Error: \"" + err.message + "\" on line " + err.line);
-    }
-    try {
-        dom.find(date).html(theDate);
-    }
-    catch(err) {
-        console.log("Error: \"" + err.message + "\" on line " + err.line);
-    }
-    try {
-        dom.find(footer).html(lastUpdated);
-    }
-    catch(err) {
-        console.log("Error: \"" + err.message + "\" on line " + err.line);
-    }
-    try {
-        dom.find(food).html(outputString);
-    }
-    catch(err) {
-        console.log("Error: \"" + err.message + "\" on line " + err.line);
-    }
+    updateView();
   },
 
   style: [
