@@ -166,6 +166,34 @@
         return capitalizedStr;
     }
 
+    function updateView() {
+        //Output
+        try {
+            dom.find(widgetTitle).html(title);
+        }
+        catch(err) {
+            console.log("Error: \"" + err.message + "\" on line " + err.line);
+        }
+        try {
+            dom.find(date).html(theDate);
+        }
+        catch(err) {
+            console.log("Error: \"" + err.message + "\" on line " + err.line);
+        }
+        try {
+            dom.find(footer).html(lastUpdated);
+        }
+        catch(err) {
+            console.log("Error: \"" + err.message + "\" on line " + err.line);
+        }
+        try {
+            dom.find(food).html(outputString);
+        }
+        catch(err) {
+            console.log("Error: \"" + err.message + "\" on line " + err.line);
+        }
+    }
+
     var dom,
      theDate,
      theMenu,
