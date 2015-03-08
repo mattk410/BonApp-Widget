@@ -6,6 +6,17 @@
 
   render: function(output) {
     return [
+        '<select class="myDiet">',
+        '  <option value="-1">All</option>',
+        '  <option value="6">Farm to Fork</option>',
+        '  <option value="18">Humane</option>',
+        '  <option value="7">In-Balance</option>',
+        '  <option value="9">Made Without Gluten</option>',
+        '  <option value="57">Contains Nuts</option>',
+        '  <option value="3">Seafood Watch</option>',
+        '  <option value="1">Vegetarian</option>',
+        '  <option value="4">Vegan</option>',
+        '</select>',
         '<div id="widgetTitle" class="e"></div>',
         '<div id="date" class="e"></div>',
         '<div id="food" class="e"></div>',
