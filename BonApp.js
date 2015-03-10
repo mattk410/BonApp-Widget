@@ -256,7 +256,13 @@
     "  font-size: 25pt",
     "  font-weight:bold",
     "  color: rgba(128,0,0,0.75)",
+
+    ".myDiet",
+    "  margin-top: -50px",
+    "  padding: 0",
+    "  margin-left: 125px",
     "  border-bottom: solid 1px black",
+    "  position: absolute",
 
     "#description",
     "  margin-left:12pt",
