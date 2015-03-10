@@ -291,6 +291,15 @@
     "p",
     "  margin: 0 0 0 20px",
 
+    "hr",
+    "  margin-top: -20px",
+    "  border-width: 1px",
+    "  color: black",
+    "  border-style: solid",
+
+    "::-webkit-scrollbar", 
+    "  display: none",
+
     ".e",
     "  height: 60pt",
 
