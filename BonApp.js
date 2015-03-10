@@ -113,15 +113,7 @@
         if(okItems.length === 0) {
             // Body
             okItems.push("0 menu items found...");
-
-            // Footer
-            var theDay = new Date().getDay();
-            if(theDay === 1) {
-                var footer = document.getElementById("footer");
-                footer.innerHTML = "*Note: the menu usually updates on Mondays";
-            }
-        }
-
+		}
         return okItems;
     }
 
