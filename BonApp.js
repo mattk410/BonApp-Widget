@@ -275,9 +275,11 @@
     "  hyphens: auto",
 
     "#food",
-    "  margin-top: -60px",
+    "  margin-top: 0px",
     "  height: auto",
     "  margin-left: 20px",
+    "  overflow-y: scroll",
+    "  max-height: 450px",
 
     "#footerBA",
     "  text-align: center",
