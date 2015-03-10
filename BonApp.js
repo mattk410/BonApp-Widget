@@ -6,6 +6,8 @@
 
   render: function(output) {
     return [
+        '<div id="widgetTitle" class="e"></div>',
+        '<div id="date" class="e"></div>',
         '<select class="myDiet">',
         '  <option value="-1">All</option>',
         '  <option value="6">Farm to Fork</option>',
@@ -17,8 +19,7 @@
         '  <option value="1">Vegetarian</option>',
         '  <option value="4">Vegan</option>',
         '</select>',
-        '<div id="widgetTitle" class="e"></div>',
-        '<div id="date" class="e"></div>',
+        '<hr>',
         '<div id="food" class="e"></div>',
         '<div id="footer"></div>',
     ].join('')
