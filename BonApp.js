@@ -241,7 +241,7 @@
 
     "#date",
     "  text-align:center",
-    "  margin-bottom:12pt",
+    "  margin-bottom: 0pt",
     "  margin-top: -40px",
     "  font-family: Helvetica",
     "  font-size: 15pt",
