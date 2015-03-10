@@ -21,7 +21,7 @@
         '</select>',
         '<hr>',
         '<div id="food" class="e"></div>',
-        '<div id="footer"></div>',
+        '<div id="footerBA"></div>',
     ].join('')
   },
 
@@ -182,7 +182,7 @@
             console.log("Error: \"" + err.message + "\" on line " + err.line);
         }
         try {
-            dom.find(footer).html(lastUpdated);
+            dom.find(footerBA).html(lastUpdated);
         }
         catch(err) {
             console.log("Error: \"" + err.message + "\" on line " + err.line);
@@ -281,7 +281,7 @@
     "  height: auto",
     "  margin-left: 20px",
 
-    "#footer",
+    "#footerBA",
     "  text-align: center",
     "  font-family: Helvetica",
     "  font-size: 9pt",
