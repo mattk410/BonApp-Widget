@@ -1,6 +1,6 @@
 
   command: 'curl -s "http://legacy.cafebonappetit.com/api/2/menus?cafe=261"',
-  refreshFrequency: 6000000,
+  refreshFrequency: 300000,
 
 
 
