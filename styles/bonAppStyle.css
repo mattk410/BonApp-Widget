@@ -1,0 +1,205 @@
+/*
+ * Overall app style
+ */
+#bonApp {
+   margin-top: 60px;
+   margin-left:60px;
+   width:300px;
+   background:rgba(255,255,255, 0.5);
+   border:2px solid rgba(000,000,000, 0.5);
+   border-radius:10px;
+   overflow:hidden;
+}
+
+/*
+ * Cafeteria selection
+ */
+#cafeSelection {
+    display: none;
+    height: 400px;
+}
+
+#widgetSelectTitle {
+    text-align:center;
+    margin-top:12pt;
+    padding-left: 10%;
+    padding-right: 3pt;
+    margin-bottom:0pt;
+    height: auto;
+    font-family: Helvetica;
+    font-size: 25pt;
+    font-weight:bold;
+    color: rgba(117, 44, 44, 0.9);
+}
+
+#queryWrapper {
+    margin-top: 16pt;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.queryBox {
+    height: 16pt;
+    width: 210px;
+}
+
+#topRightIcon {
+    position: absolute;
+    margin-top: 0px;
+    height: 35px;
+    width: 35px;
+    background-color: black;
+    background-image: url('../img/search.png');
+    background-repeat: no-repeat;
+    border-bottom-right-radius: 2em;
+}
+
+#search-label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#search-description {
+    margin-top: -30px;
+    padding-bottom: 20px;
+    padding: 0;
+    font-size: 11px;
+}
+
+.ui-autocomplete {
+    width: 152px;
+    max-height: 90px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#spinnerImg {
+    height: 30px;
+    width: 30px;
+}
+
+#spinner {
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+/*
+ * Menu
+ */
+#main {
+   display: block;
+}
+
+#updated {
+    font-family: Helvetica;
+    font-size: 12pt;
+    color: rgba(000, 000, 000, 0.5);
+}
+
+#date {
+    height: auto;
+    text-align:center;
+    margin-bottom: 3pt;
+    font-family: Helvetica;
+    font-size: 15pt;
+    font-weight:bold;
+    color: black;
+}
+
+#widgetTitle {
+    text-align:center;
+    margin-top:12pt;
+    margin-left: 10pt;
+    margin-right: 10pt;
+    padding-left: 3pt;
+    padding-right: 3pt;
+    margin-bottom:0pt;
+    height: auto;
+    font-family: Helvetica;
+    font-size: 25pt;
+    font-weight:bold;
+    color: rgba(117, 44, 44, 0.9);
+}
+
+#myDietWrapper {
+    margin-top: auto;
+    padding-bottom: 5pt;
+    border-bottom: solid 2px black;
+}
+
+.myDiet {
+    padding: 0;
+}
+
+#description {
+    margin-left:12pt;
+    margin-right:12pt;
+    font-family: American Typewriter;
+    font-size: 12pt;
+    line-height:18pt;
+    max-height:10pt;
+    overflow:hidden;
+    hyphens: auto;
+}
+
+#food {
+    margin-top: 15px;
+    height: auto;
+    margin-left: 20px;
+    padding-right: 10px;
+    overflow-y: scroll;
+    max-height: 450px;
+}
+
+#footerBA {
+    text-align: center;
+    font-family: Helvetica;
+    font-size: 9pt;
+    margin-top: 12pt;
+    margin-bottom: 12pt;
+    color: rgba(000, 000, 000, 0.5);
+}
+
+p {
+    margin: 0 0 0 20px;
+}
+
+hr {
+    margin-top: -20px;
+    border-width: 1px;
+    color: black;
+    border-style: solid;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.e {
+    height: 60pt;
+}
+
+.event {
+    font-size: 17pt;
+    font-weight: bold;
+}
+
+.meatStr {
+    color: red;
+    font-weight: bold;
+}
+
+.noSelect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
