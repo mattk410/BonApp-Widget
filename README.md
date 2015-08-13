@@ -19,7 +19,7 @@ Widgets are installed by placing them in your widgets folder.
 ### Is Your Cafe Not Listed?
 If you find that your location is associated with Bon Appetit, it could be that the `data.json` file is out of date. You can update this file yourself.
 
-1. Locate `/scripts/data.py`
+1. Locate `/scripts/getData.py`
 
 2. Run the following command
     ```sh
