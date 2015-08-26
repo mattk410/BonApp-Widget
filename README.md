@@ -21,7 +21,9 @@ If you find that your location is associated with Bon Appetit, it could be that 
 
 1. Locate `/scripts/getData.py`
 
-2. Run the following command
+2. Change the `totalCafes` number to a higher value to parse more locations
+
+3. Run the following command
     ```sh
     $ python getData.py
     ```
