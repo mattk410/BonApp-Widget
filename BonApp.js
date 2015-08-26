@@ -1,310 +1,351 @@
+command: 'curl -s "http://legacy.cafebonappetit.com/api/2/menus?cafe=261"',
+refreshFrequency: 300000,
 
-  command: 'curl -s "http://legacy.cafebonappetit.com/api/2/menus?cafe=261"',
-  refreshFrequency: 300000,
+render: function(output) {
+  return [
+      '<link rel="stylesheet" href="BonApp-Widget/styles/jquery/jquery-ui.css">',
+      '<link rel="stylesheet" href="BonApp-Widget/styles/bonAppStyle.css">',
 
+      '<script src="BonApp-widget/scripts/jquery/jquery-1.10.2.js"></script>',
+      '<script src="BonApp-widget/scripts/jquery/jquery-ui.js"></script>',
 
-
-  render: function(output) {
-    return [
-        '<div id="widgetTitle" class="e"></div>',
-        '<div id="date" class="e"></div>',
-        '<select class="myDiet">',
-        '  <option value="-1">All</option>',
-        '  <option value="6">Farm to Fork</option>',
-        '  <option value="18">Humane</option>',
-        '  <option value="7">In-Balance</option>',
-        '  <option value="9">Made Without Gluten</option>',
-        '  <option value="57">Contains Nuts</option>',
-        '  <option value="3">Seafood Watch</option>',
-        '  <option value="1">Vegetarian</option>',
-        '  <option value="4">Vegan</option>',
-        '</select>',
-        '<hr>',
-        '<div id="food" class="e"></div>',
-        '<div id="footerBA"></div>',
+      '<div id="bonApp" class="noSelect">',
+        '<div id="topRightIcon"></div>',
+        '<div id="cafeSelection">',
+          '<div id="widgetSelectTitle" class="e"></div>',
+          '<div id="queryWrapper">',
+            '<div id="queryBox">',
+              '<input type="text" class="queryBox" id="search" placeholder="Search...">',
+            '</div>',
+          '</div>',
+          '<div id="spinner">',
+            '<img id="spinnerImg" src="BonApp-widget/img/spinner.gif"></img>',
+          '</div>',
+        '</div>',
+        '<div id="main">',
+          '<div id="widgetTitle" class="e"></div>',
+          '<div id="date" class="e"></div>',
+          '<div id="myDietWrapper" align="center">',
+            '<select class="myDiet">',
+              '<option value="-1">All</option>',
+              '<option value="6">Farm to Fork</option>',
+              '<option value="18">Humane</option>',
+              '<option value="7">In-Balance</option>',
+              '<option value="9">Made Without Gluten</option>',
+              '<option value="57">Contains Nuts</option>',
+              '<option value="3">Seafood Watch</option>',
+              '<option value="1">Vegetarian</option>',
+              '<option value="4">Vegan</option>',
+            '</select>',
+          '</div>',
+          '<div id="food" class="e"></div>',
+          '<div id="footerBA"></div>',
+        '</div>',
+      '</div>'
     ].join('')
   },
 
   update: function(output, domEl) {
 
-    var dietSelection = document.querySelector(".myDiet");
-    dietSelection.onchange = function() {
-        // save to LocalStorage every time we make a change
-        saveSettings(dietSelection.value);
+    var dietSelection = domEl.querySelector('.myDiet');
+
+
+    var saveSettings = function(diet) {
+      var friendly, userSettings;
+
+      userSettings = {
+        diet: diet
+      };
+
+      localStorage.setItem('BonAppSettings', JSON.stringify(userSettings));
+      friendly = parseMenu(theMenu, diet);
+      outputString = createOutputString(friendly);
+
+      return updateView();
     };
 
-    function saveSettings(diet) {
-        var userSettings = {
-            diet: diet,
-        };
 
-        localStorage.setItem('BonAppSettings', JSON.stringify(userSettings));
+    var createOutputString = function(okItems) {
+      var str = '';
+      var i = 0;
 
-        var friendly = parseMenu(theMenu, diet);
-        outputString = createOutputString(friendly);
-        updateView();
+      while (i < okItems.length) {
+        str += okItems[i] + '<br>';
+        i++;
+      }
 
-        return;
-    }
+      return str;
+    };
 
-    function createOutputString(okItems){
-        var str = "";
-        for(var i = 0; i < okItems.length; i++){
-            str += okItems[i] + "<br>";
-        }
-        return str;
-    }
 
-    function parseDate(x){
-        var m,d,y;
-        y=x.substr(0,4);
-        m=x.substr(5,2);
-        d=x.substr(8,2);
+    var parseDate = function(x) {
+      var y = x.substr(0, 4);
+      var m = x.substr(5, 2);
+      var d = x.substr(8, 2);
 
-        var rawToday = new Date(y+"-"+m+"-"+d);
-        var offsetDate = Date(rawToday - rawToday.getTimezoneOffset());
-        var todayDate = new Date(offsetDate).toString();
-        var today = todayDate.substr(0,10);
+      var postedDate = new Date(y, m - 1, d).toString();
+      postedDate = postedDate.substr(0, 10);
 
-        return today.toString();
-    }
+      return postedDate.toString();
+    };
 
-    function parseCafe(json) {
-        var id = ([Object.keys(json["days"][0]["cafes"])[0]]);
-        var theTitle = json["days"][0]["cafes"][id]["name"];
-        return theTitle;
-    }
 
-    function parseMenu(menu, diet){
-        // your selected diets
-        var preferredDiet = parseInt(diet);
+    var parseCafe = function(json) {
+      var id = [Object.keys(json['days'][0]['cafes'])[0]];
+      var theTitle = json['days'][0]['cafes'][id]['name'];
 
-        var okItems = [];
-        var prevStation = "";
-        var item = "";
+      return theTitle;
+    };
 
-        for(var prop in menu){
-            // looping through the properties on an element
-            if(menu.hasOwnProperty(prop)){
-                    // Icon (filtering dietary restrictions)
-                    if(menu[prop].cor_icon.hasOwnProperty(preferredDiet) || preferredDiet == -1){
-                        // Station
-                        if(menu[prop].station != prevStation){
-                            // clean station string
-                            item = "<br />" + cleanUpStationLabel(menu[prop].station + "<br />");
-                            // push food label next to the station
-                            item += "⚬ " + capitalizeStr(menu[prop].label, 0, 1);
-                            // the previous station
-                            prevStation = menu[prop].station;
-                        }
-                        // same station with more items
-                        else {
-                            // the served food item
-                            item = "⚬ " + capitalizeStr(menu[prop].label, 0, 1);
-                            // the previous station
-                            prevStation = menu[prop].station;
-                        }
-                        // add it
-                        okItems.push(item);
-                    }
+
+    var parseMenu = function(menu, diet) {
+      var preferredDiet = parseInt(diet);
+      var okItems = [];
+      var prevStation = '';
+      var item = '';
+      var desc = '';
+
+      for (prop in menu) {
+        if (menu.hasOwnProperty(prop)) {
+          if (menu[prop].cor_icon.hasOwnProperty(preferredDiet) || preferredDiet === -1) {
+            if (menu[prop].station !== prevStation) {
+              item = '<br />' + cleanUpStationLabel(menu[prop].station + '<br />');
+              item += '⚬ ' + capitalizeStr(menu[prop].label, 0, 1);
+              if(menu[prop].description != '') {
+                  desc = menu[prop].description.replace(/<br \/>/g, '<br /> ⚬ ');
+                  item += "<br />" + '⚬ ' + desc;
+              }
+              prevStation = menu[prop].station;
             }
+            else {
+                item = '⚬ ' + capitalizeStr(menu[prop].label, 0, 1);
+              if(menu[prop].description != '') {
+                  desc = menu[prop].description.replace(/<br \/>/g, '<br /> ⚬ ');
+                  item += "<br />" + '⚬ ' + desc;
+              }
+                prevStation = menu[prop].station;
+            }
+            okItems.push(item);
+          }
         }
-        // Handle update on Mondays and 0 results
-        if(okItems.length === 0) {
-            // Body
-            okItems.push("0 menu items found...");
-		}
-        return okItems;
-    }
+      }
+      if (okItems.length === 0) {
+        okItems.push('0 menu items found...');
+      }
 
-    function lastUpdated() {
-        var time    = new Date();
-        var hours   = time.getHours();
-        var minutes = time.getMinutes();
-        var timeOfDay = "";
+      return okItems;
+    };
 
-        // convert from military time
-        if (hours > 12) {
-            timeOfDay = "pm";
-            hours -= 12;
-        } else if (hours === 0) {
-            timeOfDay = "am";
-            hours = 12;
-        } else {
-            timeOfDay = "am";
-        }
 
-        var lastUpdated = "Updated at " + pad(hours) + ":" + pad(minutes) + timeOfDay;
+    lastUpdated = function() {
+      var time = new Date;
+      var hours = time.getHours();
+      var minutes = time.getMinutes();
+      var timeOfDay = '';
 
-        return lastUpdated;
-    }
+      if (hours > 12) {
+        timeOfDay = 'pm';
+        hours -= 12;
+      }
+      else if (hours === 0) {
+        timeOfDay = 'am';
+        hours = 12;
+      }
+      else {
+        timeOfDay = 'am';
+      }
 
-    function pad(number) {
-        return (number < 10 ? '0' : '') + number;
-    }
+      return function() { return 'Updated at ' + pad(hours) + ':' + pad(minutes) + timeOfDay};
+    };
 
-    function capitalizeStr(theStr, upperCaseLetter, removeLetter) {
-        var newCapitalStr = theStr[upperCaseLetter].toUpperCase() + theStr.slice(removeLetter)
-        return newCapitalStr;
-    }
 
-    function cleanUpStationLabel(theStation) {
-        // replace the @ symbol
-        var cleanString = theStation.replace("@", "");
-        // capitalize first letter
-        var capitalizedStr = capitalizeStr(cleanString, 8, 9);
-        // add back in the bold formatting
-        capitalizedStr = "<strong>" + capitalizedStr + "</strong>";
+    var pad = function(number) {
+      return (number < 10 ? '0' : '') + number;
+    };
 
-        return capitalizedStr;
-    }
 
-    function updateView() {
-        //Output
-        try {
-            dom.find(widgetTitle).html(title);
-        }
-        catch(err) {
-            console.log("Error: \"" + err.message + "\" on line " + err.line);
-        }
-        try {
-            dom.find(date).html(theDate);
-        }
-        catch(err) {
-            console.log("Error: \"" + err.message + "\" on line " + err.line);
-        }
-        try {
-            dom.find(footerBA).html(lastUpdated);
-        }
-        catch(err) {
-            console.log("Error: \"" + err.message + "\" on line " + err.line);
-        }
-        try {
-            dom.find(food).html(outputString);
-        }
-        catch(err) {
-            console.log("Error: \"" + err.message + "\" on line " + err.line);
-        }
-    }
+    var capitalizeStr = function(theStr, upperCaseLetter, removeLetter) {
+      var newCapitalStr = theStr[upperCaseLetter].toUpperCase() + theStr.slice(removeLetter);
+      return newCapitalStr;
+    };
 
-    function initFromLocalStorage() {
-        // check to see if LocalStorage has been set
-        if (localStorage.getItem("BonAppSettings") != null) {
-            var savedDiet = localStorage.getItem("BonAppSettings");
-            var theValue = JSON.parse(savedDiet).diet;
-            document.querySelector(".myDiet").value = theValue;
+
+    var sortByProperty = function(property) {
+      'use strict';
+      return function(a, b) {
+        var sortStatus = 0;
+        if (a[property] < b[property]) {
+          sortStatus = -1;
         }
-        else {
-            return -1;
+        else if (a[property] > b[property]) {
+          sortStatus = 1;
         }
 
-        return theValue;
-    }
+        return sortStatus;
+      };
+    };
 
-    var savedDiet = initFromLocalStorage();
 
-    var dom,
-     theDate,
-     theMenu,
-     title,
-     lastUpdated,
-     jstringObj,
-     outputString;
+    var updateTheData = (function(_this) {
+      return function(cafeId) {
+        var theCommand = 'curl -s \'http://legacy.cafebonappetit.com/api/2/menus?cafe=' + cafeId + "'";
 
-    dom          = $(domEl);
-    jstringObj   = JSON.parse(output);
-    title        = parseCafe(jstringObj);
-    lastUpdated  = lastUpdated();
-    theDate      = parseDate(jstringObj.days[0].date);
-    theMenu      = jstringObj.items;
-    var friendly = parseMenu(theMenu, savedDiet);
-    outputString = createOutputString(friendly);
+        return _this.run(theCommand, function(err, myOut) {
+          makeItAllHappen(myOut);
+          return changeTheView();
+        });
+      };
+    })(this);
 
-    updateView();
-  },
 
-  style: [
-    "top: 20px",
-    "left: 40px",
-    "width:400px",
-    "margin:0px",
-    "padding:0px",
-    "background:rgba(#FFF, 0.5)",
-    "border:2px solid rgba(#000, 0.5)",
-    "border-radius:10px",
-    "overflow:hidden",
+    var initSearch = function() {
+      return jQuery.get('BonApp-widget/scripts/data.json', function(data) {
+        return $('#search').autocomplete({
+          source: data.sort(sortByProperty('label')),
+          minLength: 3,
 
-    "#updated",
-    "  font-family: Helvetica",
-    "  font-size: 12pt",
-    "  color: rgba(0,0,0,0.75)",
+          select: function(event, ui) {
+            $("#spinner").show();
+            $('#search').val(ui.item.label);
 
-    "#date",
-    "  text-align:center",
-    "  margin-bottom: 0pt",
-    "  margin-top: -40px",
-    "  font-family: Helvetica",
-    "  font-size: 15pt",
-    "  font-weight:bold",
-    "  color: rgba(0,0,0,0.75)",
+            updateTheData(ui.item.id);
 
-    "#widgetTitle",
-    "  text-align:center",
-    "  margin-top:12pt",
-    "  margin-bottom:0pt",
-    "  font-family: Helvetica",
-    "  font-size: 25pt",
-    "  font-weight:bold",
-    "  color: rgba(128,0,0,0.75)",
+            return false;
+          },
 
-    ".myDiet",
-    "  margin-top: -50px",
-    "  padding: 0",
-    "  margin-left: 125px",
-    "  border-bottom: solid 1px black",
-    "  position: absolute",
+          open: function() {
+            return $('.ui-autocomplete:visible').css({
+              top: '+=0',
+              left: '-=0'
+            });
+          }
 
-    "#description",
-    "  margin-left:12pt",
-    "  margin-right:12pt",
-    "  font-family: American Typewriter",
-    "  font-size: 12pt",
-    "  line-height:18pt",
-    "  max-height:10pt",
-    "  overflow:hidden",
-    "  hyphens: auto",
+        }).autocomplete('instance')._renderItem = function(ul, item) {
+          return $('<li>').append('<a>' +
+                                  '<a id=\'search-label\'>' + item.label + '</a>' +
+                                  '<a id=\'search-description\'>' + item.desc + '</a>' + '</a>')
+                          .appendTo(ul);
+        };
+      });
+    };
 
-    "#food",
-    "  margin-top: 0px",
-    "  height: auto",
-    "  margin-left: 20px",
-    "  overflow-y: scroll",
-    "  max-height: 450px",
 
-    "#footerBA",
-    "  text-align: center",
-    "  font-family: Helvetica",
-    "  font-size: 9pt",
-    "  margin-top: 12pt",
-    "  margin-bottom: 12pt",
-    "  color: rgba(#000, 0.5)",
+    var cleanUpStationLabel = function(theStation) {
+      var cleanString = theStation.replace('@', '');
+      var capitalizedStr = capitalizeStr(cleanString, 8, 9);
+      capitalizedStr = '<strong>' + capitalizedStr + '</strong>';
 
-    "p",
-    "  margin: 0 0 0 20px",
+      return capitalizedStr;
+    };
 
-    "hr",
-    "  margin-top: -20px",
-    "  border-width: 1px",
-    "  color: black",
-    "  border-style: solid",
 
-    "::-webkit-scrollbar", 
-    "  display: none",
+    var updateView = function() {
+      var err;
+      var theLastUpdate = lastUpdated;
 
-    ".e",
-    "  height: 60pt",
+      try {
+        dom.find(widgetSelectTitle).html(widgetSelect);
+      }
+      catch (_error) {
+        err = _error;
+        console.log('Error: "' + err.message + '" on line ' + err.line);
+      }
+      try {
+        dom.find(widgetTitle).html(title);
+      }
+      catch (_error) {
+        err = _error;
+        console.log('Error: "' + err.message + '" on line ' + err.line);
+      }
+      try {
+        dom.find(date).html(theDate);
+      }
+      catch (_error) {
+        err = _error;
+        console.log('Error: "' + err.message + '" on line ' + err.line);
+      }
+      try {
+        dom.find(footerBA).html(theLastUpdate);
+      }
+      catch (_error) {
+        err = _error;
+        console.log('Error: "' + err.message + '" on line ' + err.line);
+      }
+      try {
+        return dom.find(food).html(outputString);
+      }
+      catch (_error) {
+        err = _error;
+        console.log('Error: "' + err.message + '" on line ' + err.line);
+      }
+    };
 
-    ".event",
-    "  font-size: 17pt",
-    "  font-weight: bold",
-    ].join('\n')
+
+    var initFromLocalStorage = function() {
+      var theValue;
+
+      if (localStorage.getItem('BonAppSettings') !== null) {
+        savedDiet = localStorage.getItem('BonAppSettings');
+        var theValue = JSON.parse(savedDiet).diet;
+        document.querySelector('.myDiet').value = theValue;
+      }
+      else {
+        return -1;
+      }
+
+      return theValue;
+    };
+
+
+    dietSelection.onchange = function() {
+      return saveSettings(dietSelection.value);
+    };
+
+
+    switchNum = 0;
+
+    var changeTheView = function() {
+
+      if (switchNum % 2 == 0) {
+        $('#cafeSelection').show();
+        $('#main').hide();
+        $("#spinner").hide();
+        $('#topRightIcon').css('background-image', 'url(BonApp-Widget/img/arrow.png)');
+        $('#bonApp').css('height', '200px');
+        $('.queryBox').focus();
+
+        initSearch();
+      }
+      else {
+        $('#cafeSelection').hide();
+        $('#main').show();
+        $('#topRightIcon').css('background-image', 'url(BonApp-Widget/img/search.png)');
+        $('#bonApp').css('height', 'auto');
+      }
+
+      return switchNum++;
+    };
+
+
+    document.getElementById('topRightIcon').addEventListener('click', function() {
+      return changeTheView();
+    });
+
+
+   var makeItAllHappen = function(output) {
+      dom          = $(domEl);
+      savedDiet    = initFromLocalStorage();
+      jstringObj   = JSON.parse(output);
+      title        = parseCafe(jstringObj);
+      theDate      = parseDate(jstringObj.days[0].date);
+      theMenu      = jstringObj.items;
+      friendly     = parseMenu(theMenu, savedDiet);
+      outputString = createOutputString(friendly);
+      widgetSelect = 'Find Your Café';
+
+      return updateView();
+    };
+
+
+    makeItAllHappen(output);
+  }
