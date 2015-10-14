@@ -2,8 +2,8 @@
  * Overall app style
  */
 #bonApp {
-   margin-top: 60px;
-   margin-left:60px;
+   margin-top: 170px;
+   margin-left:0px;
    width:300px;
    background:rgba(255,255,255, 0.5);
    border:2px solid rgba(000,000,000, 0.5);
@@ -53,6 +53,7 @@
     background-image: url('../img/search.png');
     background-repeat: no-repeat;
     border-bottom-right-radius: 2em;
+    border-top-left-radius:7px;
 }
 
 #search-label {
@@ -70,8 +71,8 @@
 
 .ui-autocomplete {
     width: 152px;
-    max-height: 90px;
-    overflow-y: scroll;
+    max-height: 200px;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -203,3 +204,49 @@ hr {
     -ms-user-select: none;
     user-select: none;
 }
+
+
+/*
+ * No internet available
+ */
+ #noNetwork {
+    background-color: #c4453c;
+    background-image: -webkit-linear-gradient(135deg, transparent,
+                      transparent 25%, hsla(0,0%,0%,.05) 25%,
+                      hsla(0,0%,0%,.05) 50%, transparent 50%,
+                      transparent 75%, hsla(0,0%,0%,.05) 75%,
+                      hsla(0,0%,0%,.05));
+    background-image: -moz-linear-gradient(135deg, transparent,
+                      transparent 25%, hsla(0,0%,0%,.1) 25%,
+                      hsla(0,0%,0%,.1) 50%, transparent 50%,
+                      transparent 75%, hsla(0,0%,0%,.1) 75%,
+                      hsla(0,0%,0%,.1));
+    background-image: -ms-linear-gradient(135deg, transparent,
+                      transparent 25%, hsla(0,0%,0%,.1) 25%,
+                      hsla(0,0%,0%,.1) 50%, transparent 50%,
+                      transparent 75%, hsla(0,0%,0%,.1) 75%,
+                      hsla(0,0%,0%,.1));
+    background-image: -o-linear-gradient(135deg, transparent,
+                      transparent 25%, hsla(0,0%,0%,.1) 25%,
+                      hsla(0,0%,0%,.1) 50%, transparent 50%,
+                      transparent 75%, hsla(0,0%,0%,.1) 75%,
+                      hsla(0,0%,0%,.1));
+    background-image: linear-gradient(135deg, transparent,
+                      transparent 25%, hsla(0,0%,0%,.1) 25%,
+                      hsla(0,0%,0%,.1) 50%, transparent 50%,
+                      transparent 75%, hsla(0,0%,0%,.1) 75%,
+                      hsla(0,0%,0%,.1));
+    background-size: 20px 20px;
+    box-shadow: 0 5px 0 hsla(0,0%,0%,.1);
+    color: #f6f6f6;
+    display: block;
+    font: bold 14px/38px sans-serif;
+    height: 30px;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+ }
+
+ #noNetwork > span {
+    margin-top: -80px;
+ }

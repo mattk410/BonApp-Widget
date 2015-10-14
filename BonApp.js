@@ -10,6 +10,7 @@ render: function(output) {
       '<script src="BonApp-widget/scripts/jquery/jquery-ui.js"></script>',
 
       '<div id="bonApp" class="noSelect">',
+        //'<div id="noNetwork"><span>Could not update</span></div>',
         '<div id="topRightIcon"></div>',
         '<div id="cafeSelection">',
           '<div id="widgetSelectTitle" class="e"></div>',
@@ -146,6 +147,9 @@ render: function(output) {
       if (hours > 12) {
         timeOfDay = 'pm';
         hours -= 12;
+      }
+      else if (hours == 12) {
+        timeOfDay = 'pm';
       }
       else if (hours === 0) {
         timeOfDay = 'am';
