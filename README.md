@@ -30,7 +30,7 @@ If you find that your location is associated with Bon Appetit, it could be that 
 
 ### Development
 
-Want to contribute? Great! 
+Want to contribute? Great!
 
 BonApp Widget uses JavaScript, Html, and CSS for familiar web development.
 Make a change in your file and instantanously see your updates!
@@ -39,3 +39,7 @@ Make a change in your file and instantanously see your updates!
 
 - [Matt Kilens](https://github.cokm/mattk410)
 - [Drew Volz](https://github.com/drewvolz)
+
+### Screenshots
+![Screenshot, september 2015](./images/screenshots/Menu.png)
+![Screenshot, september 2015](./images/screenshots/Search.png)
