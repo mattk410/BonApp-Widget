@@ -42,4 +42,5 @@ Make a change in your file and instantanously see your updates!
 
 ### Screenshots
 ![Screenshot, september 2015](./img/screenshots/Menu.png)
+
 ![Screenshot, september 2015](./img/screenshots/Search.png)
