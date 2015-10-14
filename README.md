@@ -41,5 +41,5 @@ Make a change in your file and instantanously see your updates!
 - [Drew Volz](https://github.com/drewvolz)
 
 ### Screenshots
-![Screenshot, september 2015](./images/screenshots/Menu.png)
-![Screenshot, september 2015](./images/screenshots/Search.png)
+![Screenshot, september 2015](./img/screenshots/Menu.png)
+![Screenshot, september 2015](./img/screenshots/Search.png)
