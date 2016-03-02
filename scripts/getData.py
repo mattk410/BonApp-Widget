@@ -6,9 +6,9 @@ import string, os, time, json, re, unicodedata, HTMLParser
 # Bon appetit cafe hours api url
 url 	   = "http://legacy.cafebonappetit.com/api/2/cafes?cafe="
 # How many cafeterias you want to parse (in order)
-totalCafes = 1159
+totalCafes = 1374
 # What our file should be named
-fileName   = "data.json"
+fileName = "data.json"
 
 
 # Our constructed JSON data
@@ -122,7 +122,7 @@ for num in range( 0, totalCafes ):
 
 # Write our output to a file
 with open( fileName, 'w' ) as outfile:
-    # Output the data into a file
+	# Output the data into a file
     json.dump( responseData, outfile )
     # Play a sound to alert that we have finished
     os.system('afplay /System/Library/Sounds/Glass.aiff')
@@ -132,3 +132,4 @@ with open( fileName, 'w' ) as outfile:
 print 'File: ' + fileName
 print 'Size: ' + calculateFileSize() + ' bytes'
 print 'This took ' + num2str( endTime, 2 ) + ' seconds\n'
+
