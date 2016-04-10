@@ -1,6 +1,6 @@
 # BonApp Widget
 
-BonApp Widget is an [Übersicht](https://github.com/felixhageloh/uebersicht) widget written in JavaScript. It searches the daily offerings of cafeterias and locations catered by Bon Appetit Managment Company for the menu  ([much like this interface](http://www.cafebonappetit.com/)).
+BonApp Widget is an [Übersicht](https://github.com/felixhageloh/uebersicht) widget written in JavaScript. It searches the daily offerings of cafeterias and locations catered by Bon Appetit Management Company for the menu  ([much like this interface](http://www.cafebonappetit.com/)).
 
   - Search for cafeterias by name
   - View daily menu items by station
