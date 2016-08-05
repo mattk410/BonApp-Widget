@@ -1,6 +1,6 @@
 # BonApp Widget
 
-BonApp Widget is an [Übersicht](https://github.com/felixhageloh/uebersicht) widget written in JavaScript. It searches the daily offerings of cafeterias and locations catered by Bon Appetit Managment Company for the menu  ([much like this interface](http://www.cafebonappetit.com/)).
+BonApp Widget is an [Übersicht](https://github.com/felixhageloh/uebersicht) widget written in JavaScript. It searches the daily offerings of cafeterias and locations catered by Bon Appetit Management Company for the menu  ([much like this interface](http://www.cafebonappetit.com/)).
 
   - Search for cafeterias by name
   - View daily menu items by station
@@ -21,14 +21,16 @@ If you find that your location is associated with Bon Appetit, it could be that 
 
 1. Locate `/scripts/getData.py`
 
-2. Run the following command
+2. Change the `totalCafes` number to a higher value to parse more locations
+
+3. Run the following command
     ```sh
     $ python getData.py
     ```
 
 ### Development
 
-Want to contribute? Great! 
+Want to contribute? Great!
 
 BonApp Widget uses JavaScript, Html, and CSS for familiar web development.
 Make a change in your file and instantanously see your updates!
@@ -37,3 +39,8 @@ Make a change in your file and instantanously see your updates!
 
 - [Matt Kilens](https://github.cokm/mattk410)
 - [Drew Volz](https://github.com/drewvolz)
+
+### Screenshots
+![Screenshot, september 2015](./img/screenshots/Menu.png)
+
+![Screenshot, september 2015](./img/screenshots/Search.png)

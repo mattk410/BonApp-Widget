@@ -10,6 +10,7 @@ render: function(output) {
       '<script src="BonApp-widget/scripts/jquery/jquery-ui.js"></script>',
 
       '<div id="bonApp" class="noSelect">',
+        //'<div id="noNetwork"><span>Could not update</span></div>',
         '<div id="topRightIcon"></div>',
         '<div id="cafeSelection">',
           '<div id="widgetSelectTitle" class="e"></div>',
@@ -50,31 +51,11 @@ render: function(output) {
     var dietSelection = domEl.querySelector('.myDiet');
 
 
-    var saveSettings = function(diet) {
-      var friendly, userSettings;
+    var parseCafe = function(json) {
+      var id = Object.keys(json['days'][0]['cafes'])[0];
+      var theTitle = json['days'][0]['cafes'][id]['name'];
 
-      userSettings = {
-        diet: diet
-      };
-
-      localStorage.setItem('BonAppSettings', JSON.stringify(userSettings));
-      friendly = parseMenu(theMenu, diet);
-      outputString = createOutputString(friendly);
-
-      return updateView();
-    };
-
-
-    var createOutputString = function(okItems) {
-      var str = '';
-      var i = 0;
-
-      while (i < okItems.length) {
-        str += okItems[i] + '<br>';
-        i++;
-      }
-
-      return str;
+      return theTitle;
     };
 
 
@@ -90,11 +71,28 @@ render: function(output) {
     };
 
 
-    var parseCafe = function(json) {
-      var id = [Object.keys(json['days'][0]['cafes'])[0]];
-      var theTitle = json['days'][0]['cafes'][id]['name'];
+    var widgetSelect = 'Find Your Café';
+    var jstringObj   = JSON.parse(output);
+    var theDate      = parseDate(jstringObj.days[0].date);
+    var title        = parseCafe(jstringObj);
 
-      return theTitle;
+    var saveSettings = function(diet) {
+      var friendly, userSettings;
+
+      userSettings = {
+        diet: diet
+      };
+
+      localStorage.setItem('BonAppSettings', JSON.stringify(userSettings));
+      friendly = parseMenu(theMenu, diet);
+      outputString = createOutputString(friendly);
+
+      return updateView(domEl, theDate, widgetSelect, title, outputString);
+    };
+
+
+    var createOutputString = function(okItems) {
+      return okItems.join('<br>');
     };
 
 
@@ -105,7 +103,7 @@ render: function(output) {
       var item = '';
       var desc = '';
 
-      for (prop in menu) {
+      for (var prop in menu) {
         if (menu.hasOwnProperty(prop)) {
           if (menu[prop].cor_icon.hasOwnProperty(preferredDiet) || preferredDiet === -1) {
             if (menu[prop].station !== prevStation) {
@@ -137,7 +135,7 @@ render: function(output) {
     };
 
 
-    lastUpdated = function() {
+    var lastUpdated = function() {
       var time = new Date;
       var hours = time.getHours();
       var minutes = time.getMinutes();
@@ -146,6 +144,9 @@ render: function(output) {
       if (hours > 12) {
         timeOfDay = 'pm';
         hours -= 12;
+      }
+      else if (hours == 12) {
+        timeOfDay = 'pm';
       }
       else if (hours === 0) {
         timeOfDay = 'am';
@@ -171,7 +172,7 @@ render: function(output) {
 
 
     var sortByProperty = function(property) {
-      'use strict';
+      //'use strict';
       return function(a, b) {
         var sortStatus = 0;
         if (a[property] < b[property]) {
@@ -239,7 +240,7 @@ render: function(output) {
     };
 
 
-    var updateView = function() {
+    var updateView = function(dom, theDate, widgetSelect, title, outputString) {
       var err;
       var theLastUpdate = lastUpdated;
 
@@ -302,7 +303,7 @@ render: function(output) {
     };
 
 
-    switchNum = 0;
+    var switchNum = 0;
 
     var changeTheView = function() {
 
@@ -333,17 +334,17 @@ render: function(output) {
 
 
    var makeItAllHappen = function(output) {
-      dom          = $(domEl);
-      savedDiet    = initFromLocalStorage();
-      jstringObj   = JSON.parse(output);
-      title        = parseCafe(jstringObj);
-      theDate      = parseDate(jstringObj.days[0].date);
-      theMenu      = jstringObj.items;
-      friendly     = parseMenu(theMenu, savedDiet);
-      outputString = createOutputString(friendly);
-      widgetSelect = 'Find Your Café';
+      var dom          = $(domEl);
+      var savedDiet    = initFromLocalStorage();
+      var jstringObj   = JSON.parse(output);
+      var title        = parseCafe(jstringObj);
+      var theDate      = parseDate(jstringObj.days[0].date);
+      var theMenu      = jstringObj.items;
+      var friendly     = parseMenu(theMenu, savedDiet);
+      var outputString = createOutputString(friendly);
+      var widgetSelect = 'Find Your Café';
 
-      return updateView();
+      return updateView(dom, theDate, widgetSelect, title, outputString);
     };
 
 
