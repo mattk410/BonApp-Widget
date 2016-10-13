@@ -41,6 +41,6 @@ Make a change in your file and instantanously see your updates!
 - [Drew Volz](https://github.com/drewvolz)
 
 ### Screenshots
-![Screenshot, september 2015](./img/screenshots/Menu.png)
+<img width="361" alt="screenshotsept 2015" src="./img/screenshots/Menu.png">
 
-![Screenshot, september 2015](./img/screenshots/Search.png)
+<img width="361" alt="screenshotsept 2015" src="./img/screenshots/Search.png">
